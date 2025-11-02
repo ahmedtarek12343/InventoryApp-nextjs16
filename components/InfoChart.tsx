@@ -1,76 +1,67 @@
-import { getAllProducts } from "@/lib/actions/products";
-const InfoChart = async () => {
-  const allProducts = await getAllProducts();
-  const inStockCount = allProducts.filter(
-    (product) => product.quantity > (product.lowStockAt || 5)
-  ).length;
-  const lowStockCount = allProducts.filter(
-    (product) =>
-      product.quantity <= (product.lowStockAt || 5) && product.quantity > 0
-  ).length;
-  const outOfStockCount = allProducts.filter(
-    (product) => product.quantity === 0
-  ).length;
-  const inStockPercentage =
-    allProducts.length > 0
-      ? Math.round((inStockCount / allProducts.length) * 100)
-      : 0;
-  const lowStockPercentage =
-    allProducts.length > 0
-      ? Math.round((lowStockCount / allProducts.length) * 100)
-      : 0;
-  const outOfStockPercentage =
-    allProducts.length > 0
-      ? Math.round((outOfStockCount / allProducts.length) * 100)
-      : 0;
+interface StockDistribution {
+  inStockPercentage: number;
+  lowStockPercentage: number;
+  outOfStockPercentage: number;
+}
+
+export default function InfoChart({
+  distribution,
+}: {
+  distribution: StockDistribution;
+}) {
+  const { inStockPercentage, lowStockPercentage, outOfStockPercentage } =
+    distribution;
+
   return (
     <div className="bg-card rounded-lg border border-border p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-semibold">Efficiency</h2>
+        <h2 className="text-lg font-semibold">Stock Efficiency</h2>
       </div>
       <div className="flex items-center justify-center">
         <div
           className="relative w-48 h-48 rounded-full flex items-center justify-center"
           style={{
-            background: `conic-gradient(#eee ${
-              inStockPercentage * 3.6
-            }deg, #222 0deg)`,
+            background: `conic-gradient(
+              #22c55e 0deg ${inStockPercentage * 3.6}deg,
+              #eab308 ${inStockPercentage * 3.6}deg ${
+              (inStockPercentage + lowStockPercentage) * 3.6
+            }deg,
+              #ef4444 ${
+                (inStockPercentage + lowStockPercentage) * 3.6
+              }deg 360deg
+            )`,
           }}
         >
-          <div className="absolute inset-0 rounded-full m-8"></div>{" "}
-          {/* inner circle */}
+          <div className="absolute inset-0 rounded-full m-3 bg-background" />
+          <div className="text-center z-10">
+            <div className="text-2xl font-bold">{inStockPercentage}%</div>
+            <div className="text-sm text-muted-foreground">In Stock</div>
+          </div>
         </div>
       </div>
-      <div className="mt-6 space-y-2">
+      <div className="mt-6 space-y-3">
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 rounded-full bg-green-800"></div>
-            <span>
-              In Stock <span className="font-bold">({inStockPercentage})</span>%
-            </span>
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <span className="text-muted-foreground">In Stock</span>
           </div>
+          <span className="font-bold">{inStockPercentage}%</span>
         </div>
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 rounded-full bg-yellow-800"></div>
-            <span>
-              Low Stock{" "}
-              <span className="font-bold">({lowStockPercentage})</span>%
-            </span>
+            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <span className="text-muted-foreground">Low Stock</span>
           </div>
+          <span className="font-bold">{lowStockPercentage}%</span>
         </div>
         <div className="flex items-center justify-between text-sm">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 rounded-full bg-destructive"></div>
-            <span>
-              Out of Stock{" "}
-              <span className="font-bold">({outOfStockPercentage})</span>%
-            </span>
+            <div className="w-3 h-3 rounded-full bg-red-500"></div>
+            <span className="text-muted-foreground">Out of Stock</span>
           </div>
+          <span className="font-bold">{outOfStockPercentage}%</span>
         </div>
       </div>
     </div>
   );
-};
-
-export default InfoChart;
+}
