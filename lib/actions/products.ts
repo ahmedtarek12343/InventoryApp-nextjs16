@@ -2,8 +2,6 @@
 
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { redirect } from "next/navigation";
-import { toast } from "sonner";
 import z from "zod";
 
 const ProductSchema = z.object({

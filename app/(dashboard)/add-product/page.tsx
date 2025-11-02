@@ -11,7 +11,7 @@ const AddProductPage = async () => {
             </div>
           </div>
         </div>
-        <div className="max-w-2xl bg-card m-5">
+        <div className="max-w-2xl bg-card md:m-5 mt-2">
           <div className=" rounded-lg border  p-6">
             <AddProductForm />
           </div>

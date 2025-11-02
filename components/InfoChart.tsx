@@ -1,5 +1,4 @@
 import { getAllProducts } from "@/lib/actions/products";
-import { Skeleton } from "./ui/skeleton";
 const InfoChart = async () => {
   const allProducts = await getAllProducts();
   const inStockCount = allProducts.filter(
@@ -33,17 +32,13 @@ const InfoChart = async () => {
         <div
           className="relative w-48 h-48 rounded-full flex items-center justify-center"
           style={{
-            background: `conic-gradient(#3b82f6 ${
+            background: `conic-gradient(#eee ${
               inStockPercentage * 3.6
-            }deg, #000 0deg)`,
+            }deg, #222 0deg)`,
           }}
         >
           <div className="absolute inset-0 rounded-full m-8"></div>{" "}
           {/* inner circle */}
-          <div className="text-center z-10">
-            <div className="text-2xl font-bold">{inStockPercentage}%</div>
-            <div className="text-sm">In Stock</div>
-          </div>
         </div>
       </div>
       <div className="mt-6 space-y-2">

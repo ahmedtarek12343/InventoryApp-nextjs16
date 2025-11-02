@@ -2,13 +2,13 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { createProduct } from "@/lib/actions/products";
-import { useTransition } from "react";
+import { useTransition, FormEvent } from "react";
 import { toast } from "sonner";
 
 const AddProductForm = () => {
   const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {

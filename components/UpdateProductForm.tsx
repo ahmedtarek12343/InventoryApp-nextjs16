@@ -1,11 +1,9 @@
-import React from "react";
-import { useTransition } from "react";
+import { useTransition, Dispatch, SetStateAction, FormEvent } from "react";
 import { updateProduct } from "@/lib/actions/products";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import type { Product } from "@/types/types";
-import { Dispatch, SetStateAction } from "react";
 interface Props {
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +13,7 @@ interface Props {
 const UpdateProductForm = ({ open, onOpenChange, product }: Props) => {
   const [isPending, startTransition] = useTransition();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     startTransition(async () => {

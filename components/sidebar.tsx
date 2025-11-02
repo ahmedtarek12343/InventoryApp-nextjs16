@@ -1,5 +1,5 @@
 "use client";
-import { BarChart3, Package, Plus, Settings } from "lucide-react";
+import { BarChart3, HomeIcon, Package, Plus, Settings } from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -17,6 +17,7 @@ import {
 import { UserButton } from "@stackframe/stack";
 import { useSidebar } from "@/components/ui/sidebar";
 import { usePathname } from "next/navigation";
+import { Button } from "./ui/button";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: BarChart3 },
@@ -61,6 +62,17 @@ export function sidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        <SidebarMenuButton
+          asChild
+          tooltip={"Home"}
+          onClick={() => setOpenMobile(false)}
+        >
+          <Link href={"/"}>
+            <HomeIcon />
+            <p>Home</p>
+          </Link>
+        </SidebarMenuButton>
+
         {state === "expanded" ? <UserButton showUserInfo /> : <UserButton />}
       </SidebarFooter>
     </Sidebar>

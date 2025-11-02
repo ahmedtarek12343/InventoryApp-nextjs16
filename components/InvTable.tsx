@@ -47,7 +47,7 @@ export const InvTable = ({ products }: { products: Product[] }) => {
         placeholder="Search by name or SKU..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
-        className="max-w-lg"
+        className="w-[70%] md:max-w-lg"
       />
 
       <div className="rounded-md border">
