@@ -1,8 +1,10 @@
+import { getAllProducts } from "@/lib/actions/products";
 import { InvTable } from "@/components/InvTable";
 
 const InventoryPage = async () => {
+  const products = await getAllProducts();
   return (
-    <div className="min-h-screen">
+    <div className="">
       <main className="p-4">
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -16,7 +18,7 @@ const InventoryPage = async () => {
         </div>
 
         <div className="space-y-6">
-          <InvTable />
+          <InvTable products={products} />
         </div>
       </main>
     </div>

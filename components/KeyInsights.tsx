@@ -1,26 +1,10 @@
-"use client";
-import {
-  getAllProductsQueryOptions,
-  getLowStockProductsQueryOptions,
-} from "@/api/QueryOptions";
-import { useGetAllProducts } from "@/hooks/useGetAllProducts";
-import { useQuery } from "@tanstack/react-query";
 import { TrendingUp } from "lucide-react";
-import { useGetLowStockProduct } from "@/hooks/useGetLowStockProduct";
-import { Skeleton } from "./ui/skeleton";
+import { getAllProducts } from "@/lib/actions/products";
+import { getLowStockProducts } from "@/lib/actions/products";
 
-const KeyInsights = () => {
-  const { data: totalProducts } = useGetAllProducts();
-  const { data: lowStock } = useGetLowStockProduct();
-  if (!totalProducts || !lowStock) {
-    return (
-      <div>
-        <Skeleton className="h-full"></Skeleton>
-      </div>
-    );
-  }
-
-  
+const KeyInsights = async () => {
+  const totalProducts = await getAllProducts();
+  const lowStock = await getLowStockProducts();
 
   const totalProductsCount = totalProducts?.length ?? 0;
   const lowStockCount = lowStock?.length ?? 0;
@@ -28,6 +12,7 @@ const KeyInsights = () => {
     totalProducts?.reduce((acc, curr) => {
       return acc + Number(curr.price) * curr.quantity;
     }, 0) ?? 0;
+
   return (
     <div className="bg-card rounded-lg border border-border p-6">
       <h2 className="text-lg font-semibold mb-6">Key Metrics</h2>

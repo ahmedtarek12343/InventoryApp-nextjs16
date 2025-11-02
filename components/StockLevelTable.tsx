@@ -1,4 +1,3 @@
-"use client";
 import { cn } from "@/lib/utils";
 import {
   Table,
@@ -9,20 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetRecentProducts } from "@/hooks/useGetRecentProducts";
-import { Skeleton } from "./ui/skeleton";
-const StockLevelTable = () => {
-  const { data: recent, isLoading } = useGetRecentProducts();
-  if (isLoading) {
-    return (
-      <div className="">
-        <Skeleton className="h-full"></Skeleton>
-      </div>
-    );
-  }
-  if (!recent) {
-    return <div className="">failed to fetch recent products</div>;
-  }
+import { getRecentProducts } from "@/lib/actions/products";
+const StockLevelTable = async () => {
+  const recent = await getRecentProducts();
   return (
     <div className="bg-card rounded-lg border border-border p-6">
       <Table>
